@@ -1,0 +1,49 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Trak {
+  id: Int!
+  name: String
+  description: String
+  year: Float
+  model: String
+  milage: Float
+  isactive: Boolean
+}
+
+type Expediteur {
+  id: Int!
+  prenom: String!
+  nom: String!
+  typecommerce: Int!
+  nbrdepots: Int!
+  milage: DateTime
+  createdon: DateTime
+  modifiedon: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Producteur {
+  id: Int!
+  prenom: String
+  address1: String
+}
+
+type Query {
+  getTrak(id: Int!): Trak!
+  fetchTrakByName(name: String!): Trak!
+  fetchTraks: [Producteur!]!
+  getExpediteur(id: Int!): Expediteur!
+  fetchExpediteurByName(name: String!): Expediteur!
+  fetchExpediteurs: [Expediteur!]!
+  getProducteur(id: Int!): Producteur!
+}
+
+type Mutation {
+  upNbrDepotsExpediteur(id: Float!): Expediteur!
+}

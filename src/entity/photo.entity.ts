@@ -1,25 +1,30 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Photo {
+export class Photo extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ length: 500 })
   name: string;
 
-  @Column('text')
+  @Column({type: 'text', nullable: true})
   description: string;
 
-  @Column()
+  @Column({nullable: true})
   filename: string;
 
-  @Column('int')
+  @Column({type: 'int', nullable: true})
   views: number;
 
-  @Column()
+  @Column({nullable: true})
   isPublished: boolean;
 
-  @Column()
-  newField: string;
+  static findByName(name: string, filename: string) {
+    return this.createQueryBuilder("user")
+        .where("photo.name = :name", { name })
+        .andWhere("photo.filename = :filename", { filename })
+        .getMany();
+  }
+
 }
