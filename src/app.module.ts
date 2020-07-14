@@ -9,6 +9,7 @@ import { TrakModule } from './trak/trak.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ExpediteurModule } from './expediteur/expediteur.module';
 import { ProducteurModule } from './producteur/producteur.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -16,12 +17,14 @@ import { ProducteurModule } from './producteur/producteur.module';
     TrakModule,
     ExpediteurModule,
     ProducteurModule,
+    UserModule,
     GraphQLModule.forRoot({
       debug: false,
       playground: false,
-      include: [TrakModule, ExpediteurModule, ProducteurModule],
+      include: [TrakModule, ExpediteurModule, ProducteurModule, UserModule],
       autoSchemaFile: process.cwd() +  '/src/schema.gql',
     }),
+    UserModule,
   ],
   controllers: [AppController, OffreController],
   providers: [AppService, DatabaseModule],
