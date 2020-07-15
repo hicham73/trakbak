@@ -1,0 +1,59 @@
+type User {
+  id: Int!
+  username: String
+  password: String!
+  prenom: String
+  nom: String
+  email: String
+  type: Int!
+  CreatedOn: DateTime
+  ModifiedOn: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Transporteur {
+  id: Int!
+  type: String
+  nom: String
+  prenom: String
+}
+
+input UserInput {
+  id: Int!
+  username: String
+  password: String!
+  prenom: String
+  nom: String
+  email: String
+  type: Int!
+  CreatedOn: DateTime
+  ModifiedOn: DateTime
+}
+
+input TransporteurInput {
+  id: Int!
+  type: String
+  nom: String
+  prenom: String
+}
+
+type Query {
+  getUser(id: Int!): User!
+  getUsers: [User!]!
+  fetchUserByName(prenom: String!): User!
+  getTransporteur(id: Int!): Transporteur!
+  getTransporteurs: [Transporteur!]!
+}
+
+type Mutation {
+  deleteUser(id: Int!): User!
+  updateUser(userInput: UserInput!): User!
+  createUser(userInput: UserInput!): User!
+  deleteTransporteur(id: Int!): Transporteur!
+  updateTransporteur(transporteurInput: TransporteurInput!): Transporteur!
+  createTransporteur(transporteurInput: TransporteurInput!): Transporteur!
+}
