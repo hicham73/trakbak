@@ -2,16 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Trak {
-  id: Int!
-  name: String
-  description: String
-  year: Float
-  model: String
-  milage: Float
-  isactive: Boolean
-}
-
 type Expediteur {
   id: Int!
   prenom: String!
@@ -59,13 +49,11 @@ input UserInput {
 }
 
 type Query {
-  getTrak(id: Int!): Trak!
-  fetchTrakByName(name: String!): Trak!
-  fetchTraks: [Producteur!]!
   getExpediteur(id: Int!): Expediteur!
   fetchExpediteurByName(name: String!): Expediteur!
   fetchExpediteurs: [Expediteur!]!
   getProducteur(id: Int!): Producteur!
+  fetchTraks: [Producteur!]!
   getUser(id: Int!): User!
   getUsers: [User!]!
   fetchUserByName(prenom: String!): User!

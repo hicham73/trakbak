@@ -1,32 +1,36 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { OffreController } from './offre/offre.controller';
 import { DatabaseModule } from './database/database.module';
 import { databaseProviders } from './database/database.providers';
-import { PhotoModule } from './photo/photo.module';
-import { TrakModule } from './trak/trak.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ExpediteurModule } from './expediteur/expediteur.module';
 import { ProducteurModule } from './producteur/producteur.module';
 import { UserModule } from './user/user.module';
+import { VehiculeModule } from './vehicule/vehicule.module';
+import { ChauffeurModule } from './chauffeur/chauffeur.module';
+import { TransporteurModule } from './transporteur/transporteur.module';
 
 @Module({
   imports: [
-    PhotoModule,
-    TrakModule,
     ExpediteurModule,
     ProducteurModule,
     UserModule,
+    ChauffeurModule,
+    VehiculeModule,
+    TransporteurModule,
     GraphQLModule.forRoot({
       debug: false,
       playground: false,
-      include: [TrakModule, ExpediteurModule, ProducteurModule, UserModule],
-      autoSchemaFile: process.cwd() +  '/src/schema.gql',
+      include: [ExpediteurModule, ProducteurModule, UserModule, ChauffeurModule, VehiculeModule, TransporteurModule],
+      autoSchemaFile: process.cwd() +  '/src/graphql.gql',
     }),
     UserModule,
+    VehiculeModule,
+    ChauffeurModule,
+    TransporteurModule,
   ],
-  controllers: [AppController, OffreController],
+  controllers: [AppController],
   providers: [AppService, DatabaseModule],
 })
 export class AppModule {}

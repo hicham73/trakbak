@@ -33,7 +33,9 @@ export class UserResolver {
 
     let user = User.findOne(id);
 
-    return (await user).remove();
+    (await user).remove();
+
+    return user;
   }
 
   @Mutation(returns => User)
