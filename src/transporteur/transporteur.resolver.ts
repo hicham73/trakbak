@@ -1,5 +1,7 @@
-import { Resolver, Query, ResolveField, Args, Int, Mutation, InputType, Field } from '@nestjs/graphql';
+import { Resolver, Query, ResolveField, Args, Int, Mutation, InputType, Field, Parent } from '@nestjs/graphql';
 import { Transporteur } from './transporteur.entity';
+import { VehiculeResolver } from 'src/vehicule/vehicule.resolver';
+import { Vehicule } from 'src/vehicule/vehicule.entity';
 
 @Resolver(of => Transporteur)
 export class TransporteurResolver {
@@ -49,6 +51,13 @@ export class TransporteurResolver {
 
     return await transporteur.save();
     // return Transporteur.query<Transporteur>(`select * from Transporteur`);
+  }
+
+  
+  @ResolveField('vehicules')
+  async vehicules(@Parent() transporteur: Transporteur) {
+    // const { id } = vehicule;
+    return  await Vehicule.createQueryBuilder().where(`transporteurId = '${transporteur.id}'`).getMany();
   }
 
 }

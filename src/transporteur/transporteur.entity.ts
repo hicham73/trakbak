@@ -37,7 +37,8 @@ export class Transporteur extends BaseEntity {
     isactive: boolean;
 
 
-    @OneToMany(type => Vehicule, vehicule => vehicule.transporteur) 
+    @OneToMany(type => Vehicule, vehicule => vehicule.transporteur)
+    @Field( type => [Vehicule], {nullable: true}) 
     vehicules: Vehicule[];
 
     @OneToMany(type => Chauffeur, chauffeur => chauffeur.transporteur) 

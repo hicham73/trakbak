@@ -35,6 +35,7 @@ export class Vehicule extends BaseEntity {
     ptac: number;
 
     @Column("date")
+    @Field({nullable: true})
     datemisecirculation: Date;
 
     @Column({ type: "varchar", length: 100, nullable: true  })
@@ -42,6 +43,7 @@ export class Vehicule extends BaseEntity {
    	carburant?: string;
 
     @Column({ type: "varchar", length: 100, nullable: true  })
+    @Field({nullable: true})
    	vitesse?: string;
 
     @Column({ type: "varchar", length: 100, nullable: true  })
@@ -53,11 +55,12 @@ export class Vehicule extends BaseEntity {
     isactive: boolean;
 
     @ManyToOne(type => Transporteur, transporteur => transporteur.vehicules)
-    transporteur: Transporteur;
+    @Field(type => Transporteur, {nullable: true} )
+    transporteur?: Transporteur;
 
     @ManyToMany(type => Chauffeur, chauffeur => chauffeur.vehicules)
     @JoinTable()
-    // @Field(type => Chauffeur[])
+    @Field(type => [Chauffeur])
     chauffeurs: Chauffeur[];    
 
 }
