@@ -1,8 +1,9 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToOne, ManyToMany, ManyToOne, JoinTable, JoinColumn, BaseEntity} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, ManyToOne, JoinTable, JoinColumn, BaseEntity} from "typeorm";
 import { Field, Int, ObjectType, InputType } from '@nestjs/graphql';
 
 import {Chauffeur} from "../chauffeur/chauffeur.entity";
 import {Transporteur} from "../transporteur/transporteur.entity";
+import {Image} from "../image/image.entity";
 
 
 @Entity()
@@ -11,30 +12,30 @@ import {Transporteur} from "../transporteur/transporteur.entity";
 export class Vehicule extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    @Field(type => Int)
+    @Field(type => Int, {nullable: true})
     id: number;
 
-    @Column({type: "varchar",  length: 100  })
-    @Field({nullable: true})
+    @Column({type: "varchar",  length: 100, nullable: true  })
+    @Field({nullable: true })
    	fabricant: string;
 
-    @Column({type: "varchar",  length: 100  })
+    @Column({type: "varchar",  length: 100, nullable: true  })
     @Field({nullable: true})
    	modele: string;
 
-    @Column({type: "varchar",  length: 100  })
+    @Column({type: "varchar",  length: 100, nullable: true  })
     @Field({nullable: true})
    	type: string;
 
-    @Column({type: "varchar",  length: 20, unique: true  })
+    @Column({type: "varchar",  length: 20, unique: true, nullable: true  })
     @Field({nullable: true})
    	immatriculation: string;
 
-    @Column("double")
+    @Column({ type: "double", nullable: true} )
     @Field({nullable: true})
     ptac: number;
 
-    @Column("date")
+    @Column({ type: "date", nullable: true})
     @Field({nullable: true})
     datemisecirculation: Date;
 
@@ -50,7 +51,7 @@ export class Vehicule extends BaseEntity {
     @Field({nullable: true})
    	ville?: string;
 
-    @Column()
+    @Column({nullable: true})
     @Field({nullable: true})
     isactive: boolean;
 
@@ -60,8 +61,13 @@ export class Vehicule extends BaseEntity {
 
     @ManyToMany(type => Chauffeur, chauffeur => chauffeur.vehicules)
     @JoinTable()
-    @Field(type => [Chauffeur])
-    chauffeurs: Chauffeur[];    
+    @Field(type => [Chauffeur], {nullable: true})
+    chauffeurs?: Chauffeur[];
+    
+    @OneToMany(type => Image, image => image.vehicule)
+    @Field(type => [Image], {nullable: true} )
+    images?: Image[];
+
 
 }
 

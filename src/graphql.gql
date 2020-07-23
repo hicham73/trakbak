@@ -49,8 +49,14 @@ type Chauffeur {
   vehicules: [Vehicule!]!
 }
 
-type Vehicule {
+type Image {
   id: Int!
+  data: String
+  vehicule: Vehicule
+}
+
+type Vehicule {
+  id: Int
   fabricant: String
   modele: String
   type: String
@@ -62,7 +68,8 @@ type Vehicule {
   ville: String
   isactive: Boolean
   transporteur: Transporteur
-  chauffeurs: [Chauffeur!]!
+  chauffeurs: [Chauffeur!]
+  images: [Image!]
 }
 
 input UserInput {
@@ -96,8 +103,14 @@ input ChauffeurInput {
   vehicules: [VehiculeInput!]!
 }
 
-input VehiculeInput {
+input ImageInput {
   id: Int!
+  data: String
+  vehicule: VehiculeInput
+}
+
+input VehiculeInput {
+  id: Int
   fabricant: String
   modele: String
   type: String
@@ -109,7 +122,8 @@ input VehiculeInput {
   ville: String
   isactive: Boolean
   transporteur: TransporteurInput
-  chauffeurs: [ChauffeurInput!]!
+  chauffeurs: [ChauffeurInput!]
+  images: [ImageInput!]
 }
 
 type Query {
@@ -124,6 +138,10 @@ type Query {
   fetchVehiculeByName(prenom: String!): Vehicule!
   getTransporteur(id: Int!): Transporteur!
   getTransporteurs: [Transporteur!]!
+  getOneTransporteur(id: Int!): [Transporteur!]!
+  getImage(id: Int!): Image!
+  getImages: [Image!]!
+  fetchImageByName(prenom: String!): Image!
 }
 
 type Mutation {
@@ -137,4 +155,7 @@ type Mutation {
   deleteTransporteur(id: Int!): Transporteur!
   updateTransporteur(transporteurInput: TransporteurInput!): Transporteur!
   createTransporteur(transporteurInput: TransporteurInput!): Transporteur!
+  deleteImage(id: Int!): Image!
+  updateImage(imageInput: ImageInput!): Image!
+  createImage(imageInput: ImageInput!): Image!
 }

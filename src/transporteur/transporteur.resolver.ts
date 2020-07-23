@@ -18,6 +18,17 @@ export class TransporteurResolver {
     
   }
 
+  @Query(returns => [Transporteur])
+  async getOneTransporteur(@Args('id', {type: () => Int!} ) id: number) {
+    // return await Transporteur.createQueryBuilder()
+    //                          .where("transporteur.id = :id", { id: id })
+    //                          .getOne();
+
+    return await Transporteur.findOne(id);  
+    
+    
+  }
+
   @Mutation(returns => Transporteur)
   async deleteTransporteur(@Args('id', {type: () => Int}) id: number) {
 

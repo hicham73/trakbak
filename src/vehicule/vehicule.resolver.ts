@@ -43,7 +43,7 @@ export class VehiculeResolver {
   async updateVehicule(@Args('vehiculeInput') vehiculeInput: Vehicule) {
     let vehicule = await Vehicule.findOne(vehiculeInput.id);
     vehicule.modele = vehiculeInput.modele;
-    vehicule.ptac = vehiculeInput.ptac;
+    vehicule.ptac = vehiculeInput.ptac as number;
     vehicule.type = vehiculeInput.type;
     vehicule.ville = vehiculeInput.ville;
     vehicule.vitesse = vehiculeInput.vitesse;
@@ -59,7 +59,7 @@ export class VehiculeResolver {
 
   @Mutation(returns => Vehicule)
   async createVehicule(@Args('vehiculeInput') vehiculeInput: Vehicule) {
-    let vehicule = await Vehicule.findOne(vehiculeInput.id);
+    let vehicule = new Vehicule();
     vehicule.modele = vehiculeInput.modele;
     vehicule.ptac = vehiculeInput.ptac;
     vehicule.type = vehiculeInput.type;

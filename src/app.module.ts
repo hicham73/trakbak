@@ -10,6 +10,7 @@ import { UserModule } from './user/user.module';
 import { VehiculeModule } from './vehicule/vehicule.module';
 import { ChauffeurModule } from './chauffeur/chauffeur.module';
 import { TransporteurModule } from './transporteur/transporteur.module';
+import { ImageModule } from './image/image.module';
 
 @Module({
   imports: [
@@ -22,9 +23,10 @@ import { TransporteurModule } from './transporteur/transporteur.module';
     GraphQLModule.forRoot({
       debug: false,
       playground: false,
-      include: [ExpediteurModule, UserModule, ChauffeurModule, VehiculeModule, TransporteurModule],
+      include: [ExpediteurModule, UserModule, ChauffeurModule, VehiculeModule, TransporteurModule, ImageModule],
       autoSchemaFile: process.cwd() +  '/src/graphql.gql',
     }),
+    ImageModule,
   ],
   controllers: [AppController],
   providers: [AppService, DatabaseModule],
