@@ -31,10 +31,18 @@ type User {
 }
 
 type Transporteur {
-  id: Int!
-  type: String
+  id: Int
+  type: Float
   nom: String
   prenom: String
+  cin: String
+  permis: String
+  cote: Float
+  isactive: Boolean
+  nbrvehicules: Float
+  nbrvoyages: Float
+  dateinscription: DateTime
+  dateexpirationpermis: DateTime
   vehicules: [Vehicule!]
 }
 
@@ -70,6 +78,7 @@ type Vehicule {
   transporteur: Transporteur
   chauffeurs: [Chauffeur!]
   images: [Image!]
+  image: Image
 }
 
 input UserInput {
@@ -85,10 +94,18 @@ input UserInput {
 }
 
 input TransporteurInput {
-  id: Int!
-  type: String
+  id: Int
+  type: Float
   nom: String
   prenom: String
+  cin: String
+  permis: String
+  cote: Float
+  isactive: Boolean
+  nbrvehicules: Float
+  nbrvoyages: Float
+  dateinscription: DateTime
+  dateexpirationpermis: DateTime
   vehicules: [VehiculeInput!]
 }
 
@@ -124,6 +141,7 @@ input VehiculeInput {
   transporteur: TransporteurInput
   chauffeurs: [ChauffeurInput!]
   images: [ImageInput!]
+  image: ImageInput
 }
 
 type Query {
@@ -134,11 +152,10 @@ type Query {
   getUsers: [User!]!
   fetchUserByName(prenom: String!): User!
   getVehicule(id: Int!): Vehicule!
-  getVehicules: [Vehicule!]!
+  getVehicules(transporteurId: Int!): [Vehicule!]!
   fetchVehiculeByName(prenom: String!): Vehicule!
   getTransporteur(id: Int!): Transporteur!
   getTransporteurs: [Transporteur!]!
-  getOneTransporteur(id: Int!): [Transporteur!]!
   getImage(id: Int!): Image!
   getImages: [Image!]!
   fetchImageByName(prenom: String!): Image!
@@ -150,6 +167,7 @@ type Mutation {
   updateUser(userInput: UserInput!): User!
   createUser(userInput: UserInput!): User!
   deleteVehicule(id: Int!): Vehicule!
+  setImagePrincipale(imageId: Int!, vehiculeId: Int!): Boolean!
   updateVehicule(vehiculeInput: VehiculeInput!): Vehicule!
   createVehicule(vehiculeInput: VehiculeInput!): Vehicule!
   deleteTransporteur(id: Int!): Transporteur!

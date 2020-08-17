@@ -1,7 +1,6 @@
 import {Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany, ManyToOne, BaseEntity} from "typeorm";
 import { Field, Int, ObjectType, InputType } from '@nestjs/graphql';
 
-
 import {Vehicule} from "../vehicule/vehicule.entity";
 import {Chauffeur} from "../chauffeur/chauffeur.entity";
 
@@ -12,31 +11,53 @@ import {Chauffeur} from "../chauffeur/chauffeur.entity";
 export class Transporteur extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    @Field(type => Int)
+    @Field(type => Int, {nullable: true})
     id: number;
 
-    @Column({type: "varchar",  length: 100  })
+    @Column({type: "int", nullable:true   })
     @Field({nullable: true})
-    type: string;         // ............................................................... Moul L'Kamiou wella entreprise qui gère une flotte
+    type: number;
 
-    @Column({type: "varchar",  length: 100  })
+    @Column({type: "varchar",  length: 100, nullable:true   })
     @Field({nullable: true})
-   	nom: string;          // ............................................................... Nom de l'entreprise si Type =Entreprise
+   	nom: string;
 
     @Column({type: "varchar",  length: 100, nullable:true  })
     @Field({nullable: true})
-   	prenom?: string;      // ............................................................... Vide si entreprise
+   	prenom: string;
 
-    @Column({type: "varchar",  length: 20, unique: true  })
-   	cin: string;          // ............................................................... Vide si entreprise
+    @Column({type: "varchar",  length: 20, nullable: true   })
+    @Field({nullable: true})
+   	cin: string;
 
-    @Column({type: "varchar",  length: 20, unique: true  })
-   	permis: string;       // ............................................................... Vide si entreprise
+    @Column({type: "varchar",  length: 20, nullable: true   })
+    @Field({nullable: true})
+   	permis: string;
 
-    @Column()
+    @Column({type: "tinyint", nullable:true   })
+    @Field({nullable: true})
+    cote: number;
+   
+    @Column({type: "boolean", nullable: true})
+    @Field({nullable: true})
     isactive: boolean;
 
+    @Column({type: "int",  nullable:true })
+    @Field({nullable: true})
+   	nbrvehicules: number;
 
+    @Column({type: "int",  nullable:true })
+    @Field({nullable: true})
+    nbrvoyages: number;
+
+    @Column({type: "date",  nullable:true })
+    @Field({nullable: true})
+    dateinscription: Date;
+         
+    @Column({type: "date",  nullable:true })
+    @Field({nullable: true})
+    dateexpirationpermis: Date;
+         
     @OneToMany(type => Vehicule, vehicule => vehicule.transporteur)
     @Field( type => [Vehicule], {nullable: true}) 
     vehicules: Vehicule[];

@@ -8,6 +8,8 @@ import {Vehicule} from "../vehicule/vehicule.entity";
 @InputType("ImageInput")
 export class Image extends BaseEntity {
 
+    
+
     @PrimaryGeneratedColumn()
     @Field(type => Int)
     id: number;

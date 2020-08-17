@@ -18,16 +18,6 @@ export class TransporteurResolver {
     
   }
 
-  @Query(returns => [Transporteur])
-  async getOneTransporteur(@Args('id', {type: () => Int!} ) id: number) {
-    // return await Transporteur.createQueryBuilder()
-    //                          .where("transporteur.id = :id", { id: id })
-    //                          .getOne();
-
-    return await Transporteur.findOne(id);  
-    
-    
-  }
 
   @Mutation(returns => Transporteur)
   async deleteTransporteur(@Args('id', {type: () => Int}) id: number) {
@@ -40,27 +30,45 @@ export class TransporteurResolver {
   }
 
   @Mutation(returns => Transporteur)
-  async updateTransporteur(@Args('transporteurInput') transporteurInput: Transporteur) {
-    let transporteur = await Transporteur.findOne(transporteurInput.id);
-    transporteur.nom = transporteurInput.nom;
-    transporteur.prenom = transporteurInput.prenom;
-    transporteur.type = transporteurInput.type;
+  async updateTransporteur(@Args('transporteurInput') input: Transporteur) {
+    let t = await Transporteur.findOne(input.id)
+    t.type = input.type
+    t.nom = input.nom
+    t.prenom = input.prenom
+   	t.cin = input.cin
+   	t.permis = input.permis
+   	t.isactive = input.isactive
+    t.nbrvehicules = input.nbrvehicules
+    t.nbrvoyages = input.nbrvoyages
+    t.cote = input.cote
+    t.dateinscription = input.dateinscription
+    t.dateexpirationpermis = input.dateexpirationpermis
 
-    await transporteur.save();
 
-    return transporteur;
+    await t.save();
+
+    return t;
     
     // return Transporteur.query<Transporteur>(`select * from Transporteur`);
   }
 
   @Mutation(returns => Transporteur)
-  async createTransporteur(@Args('transporteurInput') transporteurInput: Transporteur) {
-    let transporteur = new Transporteur();
-    transporteur.nom = transporteurInput.nom;
-    transporteur.prenom = transporteurInput.prenom;
-    transporteur.type = transporteurInput.type;
+  async createTransporteur(@Args('transporteurInput') input: Transporteur) {
+    let t = new Transporteur();
+    t.type = input.type
+    t.nom = input.nom
+    t.prenom = input.prenom
+   	t.cin = input.cin
+   	t.permis = input.permis
+   	t.isactive = input.isactive
+    t.nbrvehicules = input.nbrvehicules
+    t.nbrvoyages = input.nbrvoyages
+    t.cote = input.cote
+    t.dateinscription = input.dateinscription;
+    t.dateexpirationpermis = input.dateexpirationpermis
+ 
 
-    return await transporteur.save();
+    return await t.save();
     // return Transporteur.query<Transporteur>(`select * from Transporteur`);
   }
 

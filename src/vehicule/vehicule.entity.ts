@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, ManyToOne, JoinTable, JoinColumn, BaseEntity} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, ManyToOne, JoinTable, OneToOne, BaseEntity, JoinColumn} from "typeorm";
 import { Field, Int, ObjectType, InputType } from '@nestjs/graphql';
 
 import {Chauffeur} from "../chauffeur/chauffeur.entity";
@@ -67,6 +67,11 @@ export class Vehicule extends BaseEntity {
     @OneToMany(type => Image, image => image.vehicule)
     @Field(type => [Image], {nullable: true} )
     images?: Image[];
+
+    @OneToOne(type => Image, image => image.vehicule)
+    @JoinColumn()
+    @Field(type => Image, {nullable: true} )
+    image: Image;
 
 
 }
