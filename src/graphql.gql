@@ -2,22 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Expediteur {
-  id: Int!
-  prenom: String!
-  nom: String!
-  typecommerce: Int!
-  nbrdepots: Int!
-  milage: DateTime
-  createdon: DateTime
-  modifiedon: DateTime
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
 type User {
   id: Int!
   username: String
@@ -30,13 +14,10 @@ type User {
   ModifiedOn: DateTime
 }
 
-type Transporteur {
-  id: Int!
-  type: String
-  nom: String
-  prenom: String
-  vehicules: [Vehicule!]
-}
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Chauffeur {
   id: Int!
@@ -72,6 +53,55 @@ type Vehicule {
   images: [Image!]
 }
 
+type Expediteur {
+  id: Float!
+  type: String!
+  nom: String!
+  prenom: String!
+  cin: String!
+  marchandise: String!
+  adresse1: String!
+  adresse2: String!
+  ville: String!
+  pays: String!
+  isactive: Boolean!
+  encheres: [Enchere!]!
+}
+
+type Enchere {
+  id: Float!
+  villedepart: String!
+  villearrivee: String!
+  marchandise: String!
+  uniteprix: String!
+  prixunitaire: Float!
+  volume: String!
+  commentaire: String!
+  debutpublication: DateTime
+  finpublication: DateTime
+  statut: String!
+  nombrepropositions: Float
+  expediteur: Expediteur
+  propositions: [Proposition!]
+}
+
+type Proposition {
+  id: Float!
+  prixunitaire: Float!
+  commentaire: String!
+  date: DateTime
+  statut: String!
+}
+
+type Transporteur {
+  id: Int!
+  type: String
+  nom: String
+  prenom: String
+  vehicules: [Vehicule!]
+  propositions: [Proposition!]
+}
+
 input UserInput {
   id: Int!
   username: String
@@ -82,14 +112,6 @@ input UserInput {
   type: Int!
   CreatedOn: DateTime
   ModifiedOn: DateTime
-}
-
-input TransporteurInput {
-  id: Int!
-  type: String
-  nom: String
-  prenom: String
-  vehicules: [VehiculeInput!]
 }
 
 input ChauffeurInput {
@@ -126,10 +148,55 @@ input VehiculeInput {
   images: [ImageInput!]
 }
 
+input ExpediteurInput {
+  id: Float!
+  type: String!
+  nom: String!
+  prenom: String!
+  cin: String!
+  marchandise: String!
+  adresse1: String!
+  adresse2: String!
+  ville: String!
+  pays: String!
+  isactive: Boolean!
+}
+
+input EnchereInput {
+  id: Float!
+  villedepart: String!
+  villearrivee: String!
+  marchandise: String!
+  uniteprix: String!
+  prixunitaire: Float!
+  volume: String!
+  commentaire: String!
+  debutpublication: DateTime
+  finpublication: DateTime
+  statut: String!
+  nombrepropositions: Float
+  expediteur: ExpediteurInput
+  propositions: [PropositionInput!]
+}
+
+input PropositionInput {
+  id: Float!
+  prixunitaire: Float!
+  commentaire: String!
+  date: DateTime
+  statut: String!
+}
+
+input TransporteurInput {
+  id: Int!
+  type: String
+  nom: String
+  prenom: String
+  vehicules: [VehiculeInput!]
+  propositions: [PropositionInput!]
+}
+
 type Query {
-  getExpediteur(id: Int!): Expediteur!
-  fetchExpediteurByName(name: String!): Expediteur!
-  fetchExpediteurs: [Expediteur!]!
   getUser(id: Int!): User!
   getUsers: [User!]!
   fetchUserByName(prenom: String!): User!
@@ -142,10 +209,17 @@ type Query {
   getImage(id: Int!): Image!
   getImages: [Image!]!
   fetchImageByName(prenom: String!): Image!
+  getExpediteur(id: Int!): Expediteur!
+  getExpediteursEncheres(id: Int!): Expediteur!
+  getExpediteurs: [Expediteur!]!
+  getPropositions: [Proposition!]!
+  getPropositionsDUneEnchere(id: Int!): [Proposition!]!
+  getEncheres: [Enchere!]!
+  getEncheresDUnExpediteur(id: Int!): [Enchere!]!
+  getEnchere(id: Int!): [Enchere!]!
 }
 
 type Mutation {
-  upNbrDepotsExpediteur(id: Float!): Expediteur!
   deleteUser(id: Int!): User!
   updateUser(userInput: UserInput!): User!
   createUser(userInput: UserInput!): User!
@@ -158,4 +232,6 @@ type Mutation {
   deleteImage(id: Int!): Image!
   updateImage(imageInput: ImageInput!): Image!
   createImage(imageInput: ImageInput!): Image!
+  updateEnchere(enchereInput: EnchereInput!): Enchere!
+  createEnchere(enchereInput: EnchereInput!): Enchere!
 }

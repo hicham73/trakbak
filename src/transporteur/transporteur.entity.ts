@@ -4,6 +4,7 @@ import { Field, Int, ObjectType, InputType } from '@nestjs/graphql';
 
 import {Vehicule} from "../vehicule/vehicule.entity";
 import {Chauffeur} from "../chauffeur/chauffeur.entity";
+import {Proposition} from "../proposition/proposition.entity";
 
 
 @Entity()
@@ -33,7 +34,7 @@ export class Transporteur extends BaseEntity {
     @Column({type: "varchar",  length: 20, unique: true  })
    	permis: string;       // ............................................................... Vide si entreprise
 
-    @Column()
+    @Column({type: 'tinyint', default: 0, nullable: true})
     isactive: boolean;
 
 
@@ -43,6 +44,11 @@ export class Transporteur extends BaseEntity {
 
     @OneToMany(type => Chauffeur, chauffeur => chauffeur.transporteur) 
     chauffeurs: Chauffeur[];
+
+        
+    @OneToMany(type => Proposition, proposition => proposition.transporteur) 
+    @Field(type => [Proposition], {nullable: true})
+    propositions: Proposition[]; 
 
 
 }

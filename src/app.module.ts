@@ -5,25 +5,32 @@ import { DatabaseModule } from './database/database.module';
 import { databaseProviders } from './database/database.providers';
 import { GraphQLModule } from '@nestjs/graphql';
 
-import { ExpediteurModule } from './expediteur/expediteur.module';
 import { UserModule } from './user/user.module';
+
+import { TransporteurModule } from './transporteur/transporteur.module';
 import { VehiculeModule } from './vehicule/vehicule.module';
 import { ChauffeurModule } from './chauffeur/chauffeur.module';
-import { TransporteurModule } from './transporteur/transporteur.module';
 import { ImageModule } from './image/image.module';
+
+import { ExpediteurModule } from './expediteur/expediteur.module';
+import { PropositionModule } from './proposition/proposition.module';
+import { EnchereModule } from './enchere/enchere.module';
 
 @Module({
   imports: [
     DatabaseModule,
     ExpediteurModule,
     UserModule,
-    ChauffeurModule,
-    VehiculeModule,
     TransporteurModule,
+    VehiculeModule,
+    ChauffeurModule,
+    ExpediteurModule,
+    PropositionModule,
+    EnchereModule,
     GraphQLModule.forRoot({
       debug: false,
       playground: false,
-      include: [ExpediteurModule, UserModule, ChauffeurModule, VehiculeModule, TransporteurModule, ImageModule],
+      include: [ExpediteurModule, EnchereModule, PropositionModule, UserModule, ChauffeurModule, VehiculeModule, TransporteurModule, ImageModule],
       autoSchemaFile: process.cwd() +  '/src/graphql.gql',
     }),
     ImageModule,
