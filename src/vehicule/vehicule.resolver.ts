@@ -1,5 +1,6 @@
 import { Resolver, Query, ResolveField, Args, Int, Mutation, InputType, Field, Parent } from '@nestjs/graphql';
 import { Vehicule } from './vehicule.entity';
+import { Image } from '../image/image.entity';
 import { Chauffeur } from "../chauffeur/chauffeur.entity";
 
 @Resolver(of => Vehicule)
@@ -12,8 +13,11 @@ export class VehiculeResolver {
   }
 
   @Query(returns => [Vehicule])
-  async getVehicules() {
-    return await Vehicule.createQueryBuilder().getMany();
+  async getVehicules(@Args('transporteurId', {type: () => Int}) transporteurId: number) {
+    return await Vehicule.createQueryBuilder('vehicule')
+                        .leftJoinAndSelect('vehicule.image','image')
+                        .where("vehicule.transporteurId = :transporteurId", { transporteurId: transporteurId })
+                        .getMany();
     
   }
 
@@ -39,6 +43,26 @@ export class VehiculeResolver {
     return vehicule;
   }
 
+  @Mutation(returns => Boolean)
+  async setImagePrincipale(
+      @Args('vehiculeId', {type: () => Int}) vehiculeId: number,  
+      @Args('imageId', {type: () => Int}) imageId: number,  
+    ) {
+
+    console.log(`vehicule id: ${vehiculeId}`);
+    console.log(`image id: ${imageId}`);
+
+    let vehicule = await Vehicule.findOne(vehiculeId);
+    let img = new Image();
+    img.id = imageId;
+    vehicule.image = img;
+
+    (await vehicule).save();
+
+    return true;
+  }
+
+
   @Mutation(returns => Vehicule)
   async updateVehicule(@Args('vehiculeInput') vehiculeInput: Vehicule) {
     let vehicule = await Vehicule.findOne(vehiculeInput.id);
@@ -49,6 +73,7 @@ export class VehiculeResolver {
     vehicule.vitesse = vehiculeInput.vitesse;
     vehicule.fabricant = vehiculeInput.fabricant;
     vehicule.immatriculation = vehiculeInput.immatriculation;
+    vehicule.image = vehiculeInput.image;
 
     await vehicule.save();
 
@@ -67,6 +92,7 @@ export class VehiculeResolver {
     vehicule.vitesse = vehiculeInput.vitesse;
     vehicule.fabricant = vehiculeInput.fabricant;
     vehicule.immatriculation = vehiculeInput.immatriculation;
+    vehiculeInput.image = vehiculeInput.image;
 
     return await vehicule.save();
     // return Vehicule.query<Vehicule>(`select * from Vehicule`);

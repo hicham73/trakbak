@@ -35,16 +35,7 @@ export class Transporteur extends BaseEntity {
     @Field({nullable: true})
    	permis: string;
 
-<<<<<<< HEAD
     @Column({type: 'tinyint', default: 0, nullable: true})
-=======
-    @Column({type: "tinyint", nullable:true   })
-    @Field({nullable: true})
-    cote: number;
-   
-    @Column({type: "boolean", nullable: true})
-    @Field({nullable: true})
->>>>>>> 8ed5b4f5eefd880bc25dfd7dbae6d129f9e06b44
     isactive: boolean;
 
     @Column({type: "int",  nullable:true })
@@ -62,6 +53,11 @@ export class Transporteur extends BaseEntity {
     @Column({type: "date",  nullable:true })
     @Field({nullable: true})
     dateexpirationpermis: Date;
+
+    @Column({type: "tinyint", nullable:true   })
+    @Field({nullable: true})
+    cote: number;
+   
          
     @OneToMany(type => Vehicule, vehicule => vehicule.transporteur)
     @Field( type => [Vehicule], {nullable: true}) 
