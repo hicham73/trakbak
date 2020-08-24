@@ -223,8 +223,7 @@ type Query {
   getTransporteurs: [Transporteur!]!
   getOneTransporteur(id: Int!): [Transporteur!]!
   getImage(id: Int!): Image!
-  getImages: [Image!]!
-  fetchImageByName(prenom: String!): Image!
+  getImages(vehiculeId: Int!): [Image!]!
   getExpediteur(id: Int!): Expediteur!
   getExpediteursEncheres(id: Int!): Expediteur!
   getExpediteurs: [Expediteur!]!

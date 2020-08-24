@@ -11,22 +11,14 @@ export class ImageResolver {
     return await Image.findOne(id);
   }
 
+
+
   @Query(returns => [Image])
-  async getImages() {
-    return await Image.createQueryBuilder().getMany();
+  async getImages(@Args('vehiculeId', {type: () => Int}) vehiculeId: number) {
+    return await Image.createQueryBuilder('image')
+                        .where("image.vehiculeId = :vehiculeId", { vehiculeId: vehiculeId })
+                        .getMany();
     
-  }
-
-  @Query(returns => Image)
-  async fetchImageByName(@Args('prenom', { type: () => String }) prenom: string) {
-    let query = `select * from image where prenom = '${prenom}'`;
-    
-    console.log('query: ' + query);
-
-    // let image = await Image.createQueryBuilder().getOne();
-    let image = await Image.createQueryBuilder().where(`prenom = '${prenom}'`).getOne();
-
-    return image;
   }
 
   @Mutation(returns => Image)

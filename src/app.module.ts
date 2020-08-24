@@ -5,6 +5,8 @@ import { DatabaseModule } from './database/database.module';
 import { databaseProviders } from './database/database.providers';
 import { GraphQLModule } from '@nestjs/graphql';
 
+import { OptionModule } from './option/option.module';
+
 import { UserModule } from './user/user.module';
 
 import { TransporteurModule } from './transporteur/transporteur.module';
@@ -30,7 +32,9 @@ import { EnchereModule } from './enchere/enchere.module';
     GraphQLModule.forRoot({
       debug: false,
       playground: false,
-      include: [ExpediteurModule, EnchereModule, PropositionModule, UserModule, ChauffeurModule, VehiculeModule, TransporteurModule, ImageModule],
+      include: [ExpediteurModule, EnchereModule, PropositionModule, UserModule, 
+                ChauffeurModule, VehiculeModule, TransporteurModule, ImageModule,
+                OptionModule],
       autoSchemaFile: process.cwd() +  '/src/graphql.gql',
     }),
     ImageModule,

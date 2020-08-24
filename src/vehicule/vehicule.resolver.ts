@@ -2,6 +2,7 @@ import { Resolver, Query, ResolveField, Args, Int, Mutation, InputType, Field, P
 import { Vehicule } from './vehicule.entity';
 import { Image } from '../image/image.entity';
 import { Chauffeur } from "../chauffeur/chauffeur.entity";
+import { Transporteur } from 'src/transporteur/transporteur.entity';
 
 @Resolver(of => Vehicule)
 export class VehiculeResolver {
@@ -65,7 +66,9 @@ export class VehiculeResolver {
 
   @Mutation(returns => Vehicule)
   async updateVehicule(@Args('vehiculeInput') vehiculeInput: Vehicule) {
+    console.log(vehiculeInput);
     let vehicule = await Vehicule.findOne(vehiculeInput.id);
+    vehicule.transporteur = vehiculeInput.transporteur; 
     vehicule.modele = vehiculeInput.modele;
     vehicule.ptac = vehiculeInput.ptac as number;
     vehicule.type = vehiculeInput.type;
@@ -85,6 +88,7 @@ export class VehiculeResolver {
   @Mutation(returns => Vehicule)
   async createVehicule(@Args('vehiculeInput') vehiculeInput: Vehicule) {
     let vehicule = new Vehicule();
+    vehicule.transporteur = vehiculeInput.transporteur; 
     vehicule.modele = vehiculeInput.modele;
     vehicule.ptac = vehiculeInput.ptac;
     vehicule.type = vehiculeInput.type;
