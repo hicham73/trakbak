@@ -2,6 +2,14 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Option {
+  id: Int!
+  groupid: Int!
+  groupname: String
+  value: Int!
+  name: String
+}
+
 type User {
   id: Int!
   username: String
@@ -110,6 +118,14 @@ type Transporteur {
   propositions: [Proposition!]
 }
 
+input OptionInput {
+  id: Int!
+  groupid: Int!
+  groupname: String
+  value: Int!
+  name: String
+}
+
 input UserInput {
   id: Int!
   username: String
@@ -213,6 +229,9 @@ input TransporteurInput {
 }
 
 type Query {
+  getOption(id: Int!): Option!
+  getAllOptions: [Option!]!
+  getOptionsByGroup(groupid: Int!): [Option!]!
   getUser(id: Int!): User!
   getUsers: [User!]!
   fetchUserByName(prenom: String!): User!
@@ -235,6 +254,9 @@ type Query {
 }
 
 type Mutation {
+  deleteOption(id: Int!): Option!
+  updateOption(optionInput: OptionInput!): Option!
+  createOption(optionInput: OptionInput!): Option!
   deleteUser(id: Int!): User!
   updateUser(userInput: UserInput!): User!
   createUser(userInput: UserInput!): User!

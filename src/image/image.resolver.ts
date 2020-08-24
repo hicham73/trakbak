@@ -52,13 +52,7 @@ export class ImageResolver {
     image.vehicule.id = imageInput.vehicule.id;
 
     return await image.save();
-    // return Image.query<Image>(`select * from Image`);
   }
 
-//   @ResolveField()
-//   async chaffeurs(@Parent() image: Image) {
-//     // const { id } = image;
-//     return  await Image.createQueryBuilder().where(`id = '${image.id}'`).getMany();
-//   }
 
 }

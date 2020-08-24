@@ -29,6 +29,8 @@ import { EnchereModule } from './enchere/enchere.module';
     ExpediteurModule,
     PropositionModule,
     EnchereModule,
+    ImageModule,
+    OptionModule,
     GraphQLModule.forRoot({
       debug: false,
       playground: false,
@@ -37,7 +39,6 @@ import { EnchereModule } from './enchere/enchere.module';
                 OptionModule],
       autoSchemaFile: process.cwd() +  '/src/graphql.gql',
     }),
-    ImageModule,
   ],
   controllers: [AppController],
   providers: [AppService, DatabaseModule],
