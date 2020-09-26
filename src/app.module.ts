@@ -17,6 +17,8 @@ import { ImageModule } from './image/image.module';
 import { ExpediteurModule } from './expediteur/expediteur.module';
 import { PropositionModule } from './proposition/proposition.module';
 import { EnchereModule } from './enchere/enchere.module';
+import { PersonneModule } from './personne/personne.module';
+import { GestionaireModule } from './gestionaire/gestionaire.module';
 
 @Module({
   imports: [
@@ -31,14 +33,19 @@ import { EnchereModule } from './enchere/enchere.module';
     EnchereModule,
     ImageModule,
     OptionModule,
+    PersonneModule,
+    GestionaireModule,
+
     GraphQLModule.forRoot({
       debug: false,
       playground: false,
       include: [ExpediteurModule, EnchereModule, PropositionModule, UserModule, 
                 ChauffeurModule, VehiculeModule, TransporteurModule, ImageModule,
-                OptionModule],
+                OptionModule, PersonneModule, GestionaireModule],
       autoSchemaFile: process.cwd() +  '/src/graphql.gql',
     }),
+    PersonneModule,
+    GestionaireModule,
   ],
   controllers: [AppController],
   providers: [AppService, DatabaseModule],

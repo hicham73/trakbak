@@ -3,6 +3,7 @@ import { Field, Int, ObjectType, InputType } from '@nestjs/graphql';
 
 import {Vehicule} from "../vehicule/vehicule.entity";
 import {Chauffeur} from "../chauffeur/chauffeur.entity";
+import {Gestionaire} from "../gestionaire/gestionaire.entity";
 import {Proposition} from "../proposition/proposition.entity";
 
 
@@ -65,6 +66,9 @@ export class Transporteur extends BaseEntity {
 
     @OneToMany(type => Chauffeur, chauffeur => chauffeur.transporteur) 
     chauffeurs: Chauffeur[];
+
+    @OneToMany(type => Gestionaire, gestionaire => gestionaire.transporteur) 
+    gestionaires: Gestionaire[];
 
         
     @OneToMany(type => Proposition, proposition => proposition.transporteur) 

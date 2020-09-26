@@ -27,15 +27,31 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type Chauffeur {
+type Gestionaire {
+  id: Int!
+  transporteur: [Transporteur!]!
+  personne: Personne!
+}
+
+type Personne {
   id: Int!
   nom: String!
   prenom: String!
   cin: String!
+  dob: DateTime!
   permis: String!
+  chauffeurs: [Chauffeur!]!
+  gestionaires: [Gestionaire!]!
+}
+
+type Chauffeur {
+  id: Int!
+  nom: String!
+  prenom: String!
   isactive: Boolean!
   transporteur: [Transporteur!]!
   vehicules: [Vehicule!]!
+  personne: [Personne!]!
 }
 
 type Image {
@@ -138,15 +154,31 @@ input UserInput {
   ModifiedOn: DateTime
 }
 
-input ChauffeurInput {
+input GestionaireInput {
+  id: Int!
+  transporteur: [TransporteurInput!]!
+  personne: PersonneInput!
+}
+
+input PersonneInput {
   id: Int!
   nom: String!
   prenom: String!
   cin: String!
+  dob: DateTime!
   permis: String!
+  chauffeurs: [ChauffeurInput!]!
+  gestionaires: [GestionaireInput!]!
+}
+
+input ChauffeurInput {
+  id: Int!
+  nom: String!
+  prenom: String!
   isactive: Boolean!
   transporteur: [TransporteurInput!]!
   vehicules: [VehiculeInput!]!
+  personne: [PersonneInput!]!
 }
 
 input ImageInput {
@@ -235,12 +267,12 @@ type Query {
   getUser(id: Int!): User!
   getUsers: [User!]!
   fetchUserByName(prenom: String!): User!
-  getVehicule(id: Int!): Vehicule!
-  getVehicules(transporteurId: Int!): [Vehicule!]!
-  fetchVehiculeByName(prenom: String!): Vehicule!
   getTransporteur(id: Int!): Transporteur!
   getTransporteurs: [Transporteur!]!
   getOneTransporteur(id: Int!): [Transporteur!]!
+  getVehicule(id: Int!): Vehicule!
+  getVehicules(transporteurId: Int!): [Vehicule!]!
+  fetchVehiculeByName(prenom: String!): Vehicule!
   getImage(id: Int!): Image!
   getImages(vehiculeId: Int!): [Image!]!
   getExpediteur(id: Int!): Expediteur!
@@ -251,6 +283,10 @@ type Query {
   getEncheres: [Enchere!]!
   getEncheresDUnExpediteur(id: Int!): [Enchere!]!
   getEnchere(id: Int!): [Enchere!]!
+  getPersonne(id: Int!): Personne!
+  getPersonnes: [Personne!]!
+  getGestionaire(id: Int!): Gestionaire!
+  getGestionaires: [Gestionaire!]!
 }
 
 type Mutation {
@@ -260,16 +296,22 @@ type Mutation {
   deleteUser(id: Int!): User!
   updateUser(userInput: UserInput!): User!
   createUser(userInput: UserInput!): User!
+  deleteTransporteur(id: Int!): Transporteur!
+  updateTransporteur(transporteurInput: TransporteurInput!): Transporteur!
+  createTransporteur(transporteurInput: TransporteurInput!): Transporteur!
   deleteVehicule(id: Int!): Vehicule!
   setImagePrincipale(imageId: Int!, vehiculeId: Int!): Boolean!
   updateVehicule(vehiculeInput: VehiculeInput!): Vehicule!
   createVehicule(vehiculeInput: VehiculeInput!): Vehicule!
-  deleteTransporteur(id: Int!): Transporteur!
-  updateTransporteur(transporteurInput: TransporteurInput!): Transporteur!
-  createTransporteur(transporteurInput: TransporteurInput!): Transporteur!
   deleteImage(id: Int!): Image!
   updateImage(imageInput: ImageInput!): Image!
   createImage(imageInput: ImageInput!): Image!
   updateEnchere(enchereInput: EnchereInput!): Enchere!
   createEnchere(enchereInput: EnchereInput!): Enchere!
+  deletePersonne(id: Int!): Personne!
+  updatePersonne(personneInput: PersonneInput!): Personne!
+  createPersonne(personneInput: PersonneInput!): Personne!
+  deleteGestionaire(id: Int!): Gestionaire!
+  updateGestionaire(gestionaireInput: GestionaireInput!): Gestionaire!
+  create(gestionaireInput: GestionaireInput!): Gestionaire!
 }
